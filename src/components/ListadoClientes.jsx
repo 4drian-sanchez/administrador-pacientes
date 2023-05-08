@@ -1,6 +1,6 @@
 import { Paciente } from "./Paciente"
 
-export const ListadoClientes = ({ pacientes, setPaciente }) => {
+export const ListadoClientes = ({ pacientes, setPaciente, eliminarPaciente }) => {
     return (
         <div className="md:w-1/2 lg:w-3/5 md:h-screen md:overflow-y-scroll mx-3">
 
@@ -18,6 +18,7 @@ export const ListadoClientes = ({ pacientes, setPaciente }) => {
                                 {...paciente}
                                 paciente={paciente}
                                 setPaciente={setPaciente}
+                                eliminarPaciente={eliminarPaciente}
                             />
                         ))
                     }

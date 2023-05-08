@@ -1,4 +1,31 @@
-export const Paciente = ({ propietario, nombre, sintomas, alta, email, paciente, setPaciente }) => {
+import Swal from 'sweetalert2'
+
+export const Paciente = ({ propietario, nombre, sintomas, alta, email, paciente, setPaciente, eliminarPaciente, id }) => {
+
+    const mostrarAlerta = () => {
+
+        Swal.fire({
+            title: '¿Quieres eliminar este registro?',
+            text: "No podrás obtener de nuevo el paciente eliminado!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '¡Sí, eliminar!',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                eliminarPaciente(id)
+                Swal.fire(
+                    '¡Eliminado!',
+                    'Se ha eliminado tu cliente',
+                    'success'
+                )
+            }
+        })
+    }
+
+
     return (
         <div className="bg-white m-3 py-7 px-4 shadow-lg rounded-xl">
 
@@ -36,7 +63,12 @@ export const Paciente = ({ propietario, nombre, sintomas, alta, email, paciente,
                 >
                     Editar
                 </button>
-                <button className="py-3 px-10 bg-red-600 hover:bg-red-800 text-white rounded-md transition-colors uppercase">Borrar</button>
+                <button
+                    className="py-3 px-10 bg-red-600 hover:bg-red-800 text-white rounded-md transition-colors uppercase"
+                    onClick={mostrarAlerta}
+                >
+                    Borrar
+                </button>
             </div>
         </div>
     )
