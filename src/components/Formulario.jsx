@@ -3,7 +3,7 @@ import { useForm } from "../Hooks/useForm"
 import { Error } from "./Error";
 import { generarId } from '../helpers/generarId';
 
-export const Formulario = ({ addPacientes, paciente }) => {
+export const Formulario = ({ pacientes, setPacientes, paciente, setPaciente }) => {
     generarId
     const {
         nombre,
@@ -20,7 +20,6 @@ export const Formulario = ({ addPacientes, paciente }) => {
             email: '',
             alta: '',
             sintomas: '',
-            id: generarId()
         });
 
     const [error, setError] = useState(false);
@@ -33,8 +32,28 @@ export const Formulario = ({ addPacientes, paciente }) => {
             return;
         }
 
+        const objPaciente = {
+            nombre,
+            propietario,
+            email,
+            alta,
+            sintomas,
+        }
+
+        if (paciente.id) {
+            //Editando paciente
+            objPaciente.id = paciente.id;
+            const pacienteActualizado = pacientes.map(pacienteState => pacienteState.id === paciente.id ? objPaciente : pacienteState);
+            setPacientes(pacienteActualizado);
+            setPaciente({});
+        } else {
+            //Agregando nuevo registro
+            objPaciente.id = generarId();
+            setPacientes([...pacientes, objPaciente]);
+        }
+
+
         setError(false);
-        addPacientes(formState);
         hundleReset({
             nombre: '',
             propietario: '',
@@ -42,6 +61,8 @@ export const Formulario = ({ addPacientes, paciente }) => {
             alta: '',
             sintomas: ''
         })
+
+
     }
 
     useEffect(() => {
